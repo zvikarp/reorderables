@@ -52,6 +52,7 @@ class ReorderableFlex extends StatefulWidget {
     this.onNoReorder,
     this.scrollController,
     this.needsLongPressDraggable = true,
+    this.disabled = false,
     this.draggingWidgetOpacity = 0.2,
     this.reorderAnimationDuration,
     this.scrollAnimationDuration,
@@ -99,6 +100,7 @@ class ReorderableFlex extends StatefulWidget {
   final MainAxisAlignment mainAxisAlignment;
 
   final bool needsLongPressDraggable;
+  final bool disabled;
   final double draggingWidgetOpacity;
 
   final Duration reorderAnimationDuration;
@@ -146,6 +148,7 @@ class _ReorderableFlexState extends State<ReorderableFlex> {
           mainAxisAlignment: widget.mainAxisAlignment,
           scrollController: widget.scrollController,
           needsLongPressDraggable: widget.needsLongPressDraggable,
+          disabled: widget.disabled,
           draggingWidgetOpacity: widget.draggingWidgetOpacity,
           reorderAnimationDuration: widget.reorderAnimationDuration,
           scrollAnimationDuration: widget.scrollAnimationDuration,
@@ -184,6 +187,7 @@ class _ReorderableFlexContent extends StatefulWidget {
     @required this.mainAxisAlignment,
     @required this.scrollController,
     @required this.needsLongPressDraggable,
+    @required this.disabled,
     @required this.draggingWidgetOpacity,
     this.reorderAnimationDuration = const Duration(milliseconds: 200),
     this.scrollAnimationDuration = const Duration(milliseconds: 200),
@@ -203,6 +207,7 @@ class _ReorderableFlexContent extends StatefulWidget {
 
   final MainAxisAlignment mainAxisAlignment;
   final bool needsLongPressDraggable;
+  final bool disabled;
   final double draggingWidgetOpacity;
   final Duration reorderAnimationDuration;
   final Duration scrollAnimationDuration;
@@ -589,7 +594,7 @@ class _ReorderableFlexContentState extends State<_ReorderableFlexContent>
       }
 
       Widget child;
-      if (!isReorderable) {
+      if (!isReorderable || widget.disabled) {
         child = toWrap;
       } else {
         child = widget.needsLongPressDraggable
@@ -976,6 +981,7 @@ class ReorderableRow extends ReorderableFlex {
     NoReorderCallback onNoReorder,
     ScrollController scrollController,
     bool needsLongPressDraggable = true,
+    bool disabled = false,
     double draggingWidgetOpacity = 0.2,
     Duration reorderAnimationDuration,
     Duration scrollAnimationDuration,
@@ -1006,6 +1012,7 @@ class ReorderableRow extends ReorderableFlex {
             mainAxisAlignment: mainAxisAlignment,
             scrollController: scrollController,
             needsLongPressDraggable: needsLongPressDraggable,
+            disabled: disabled,
             draggingWidgetOpacity: draggingWidgetOpacity,
             reorderAnimationDuration: reorderAnimationDuration,
             scrollAnimationDuration: scrollAnimationDuration,
@@ -1055,6 +1062,7 @@ class ReorderableColumn extends ReorderableFlex {
     NoReorderCallback onNoReorder,
     ScrollController scrollController,
     bool needsLongPressDraggable = true,
+    bool disabled = false,
     double draggingWidgetOpacity = 0.2,
     Duration reorderAnimationDuration,
     Duration scrollAnimationDuration,
@@ -1084,6 +1092,7 @@ class ReorderableColumn extends ReorderableFlex {
             mainAxisAlignment: mainAxisAlignment,
             scrollController: scrollController,
             needsLongPressDraggable: needsLongPressDraggable,
+            disabled: disabled,
             draggingWidgetOpacity: draggingWidgetOpacity,
             reorderAnimationDuration: reorderAnimationDuration,
             scrollAnimationDuration: scrollAnimationDuration,

@@ -48,6 +48,7 @@ class ReorderableWrap extends StatefulWidget {
     this.buildItemsContainer,
     this.buildDraggableFeedback,
     this.needsLongPressDraggable = true,
+    this.disabled = false,
     this.alignment = WrapAlignment.start,
     this.spacing = 0.0,
     this.runAlignment = WrapAlignment.start,
@@ -111,6 +112,9 @@ class ReorderableWrap extends StatefulWidget {
   /// The flag of whether needs long press to trigger dragging mode.
   /// true means it needs long press and false means no need.
   final bool needsLongPressDraggable;
+
+  /// The flag to disable the reorder functionality.
+  final bool disabled;
 
   /// How the children within a run should be places in the main axis.
   ///
@@ -282,6 +286,7 @@ class _ReorderableWrapState extends State<ReorderableWrap> {
           buildItemsContainer: widget.buildItemsContainer,
           buildDraggableFeedback: widget.buildDraggableFeedback,
           needsLongPressDraggable: widget.needsLongPressDraggable,
+          disabled: widget.disabled,
           alignment: widget.alignment,
           spacing: widget.spacing,
           runAlignment: widget.runAlignment,
@@ -329,6 +334,7 @@ class _ReorderableWrapContent extends StatefulWidget {
     @required this.buildItemsContainer,
     @required this.buildDraggableFeedback,
     @required this.needsLongPressDraggable,
+    @required this.disabled,
     @required this.alignment,
     @required this.spacing,
     @required this.runAlignment,
@@ -355,6 +361,7 @@ class _ReorderableWrapContent extends StatefulWidget {
   final BuildItemsContainer buildItemsContainer;
   final BuildDraggableFeedback buildDraggableFeedback;
   final bool needsLongPressDraggable;
+  final bool disabled;
 
   final WrapAlignment alignment;
   final double spacing;
@@ -810,7 +817,7 @@ class _ReorderableWrapContentState extends State<_ReorderableWrapContent>
       }
 
       Widget child;
-      if (!isReorderable) {
+      if (!isReorderable || widget.disabled) {
         child = toWrapWithSemantics;
       } else {
         // We build the draggable inside of a layout builder so that we can
